@@ -1,84 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ListaSequencial.h"
+#include "ListaEncadeada.h"
 
 int main(){
     Lista* li;
 
     li = cria_lista();
 
-    int tamanho = tamanho_lista(li);
-    int cheia = lista_cheia(li);
-    int vazia = lista_vazia(li);
+    int tamanho, vazia;
 
-    printf("Tamanho da Lista: %d\n", tamanho);
-    printf("Lista cheia: %d\n", cheia);
-    printf("Lista vazia: %d\n", vazia);
-
-    printf("================================\n");
-
-    Aluno al1;
-    al1.matricula = 5;
-    strcpy(al1.nome, "Noc");
-
-    Aluno al2;
-    al2.matricula = 2;
-    strcpy(al2.nome, "Jhonson");
-
-    Aluno al3;
-    al3.matricula = 3;
-    strcpy(al3.nome, "Luis Filipe");
-
-    inserir_lista(li, al1);
-    inserir_lista_inicio(li, al2);
-    inserir_lista_ordenada(li, al3);
-    
     tamanho = tamanho_lista(li);
-    cheia = lista_cheia(li);
     vazia = lista_vazia(li);
 
-    exibir_lista(li);
-    printf("Tamanho da Lista: %d\n", tamanho);
-    printf("Lista cheia: %d\n", cheia);
-    printf("Lista vazia: %d\n", vazia);
+    printf("Lista vazia? %d\n", vazia);
+    printf("Tamanho da lista: %d\n", tamanho);
+    printf("=================================\n");
 
-    printf("================================\n");
+    Aluno alunos[5] = {
+        {1, "Ana Silva", 8.0, 7.5, 9.0},
+        {2, "Bruno Souza", 6.5, 7.0, 8.0},
+        {3, "Carla Mendes", 9.0, 8.5, 9.5},
+        {4, "Diego Rocha", 5.0, 6.0, 7.0},
+        {5, "Elisa Costa", 7.5, 8.0, 8.5}
+    };
 
-    Aluno consulta1;
-    Aluno consulta2;
+    inserir_lista(li, alunos[1]);
+    inserir_lista_inicio(li, alunos[0]);
+    inserir_lista(li, alunos[3]);
+    inserir_lista_ordenada(li, alunos[2]);
+    inserir_lista_ordenada(li, alunos[4]);
 
-    int err = consultar_indice_lista(li, 2, &consulta1);
+    consultar_lista(li);
 
-    if (!err)
-        printf("aluno1: NULL\n");
-    else
-        printf("aluno1: %s\n", consulta1.nome);
-
-    err = consultar_matricula_lista(li, 5, &consulta2);
-    
-    if (!err)
-        printf("aluno2: NULL\n");
-    else
-        printf("aluno2: %s\n", consulta2.nome);
-    
-    printf("================================\n");
+    printf("=================================\n");
 
     remover_primeiro_lista(li);
-    exibir_lista(li);
     remover_ultimo_lista(li);
-    exibir_lista(li);
-    remover_elemento_lista(li, al3.matricula);
-    exibir_lista(li);
+    int teste = remover_elemento_lista(li, 3);
 
     tamanho = tamanho_lista(li);
-    cheia = lista_cheia(li);
     vazia = lista_vazia(li);
-
-    printf("Tamanho da Lista: %d\n", tamanho);
-    printf("Lista cheia: %d\n", cheia);
-    printf("Lista vazia: %d\n", vazia);
+    printf("Lista vazia? %d\n", vazia);
+    printf("Tamanho da lista: %d\n", tamanho);
     
-    libera_lista(li);
+    consultar_lista(li);
+
+    printf("=================================\n");
+
+    Aluno a1, a2;
+
+    int t1 = consultar_indice_lista(li, 0, &a1);
+    int t2 = consultar_matricula_lista(li, 2, &a2);
+
+    printf("Teste Aluno 1: %d | Teste Aluno 2: %d\n", t1, t2);
+    
+    if (t1 == 1) printf("Aluno 1: %s\n", a1.nome);
+    if (t2 == 1) printf("Aluno 2: %s\n", a2.nome);
+    
+
     return 0;
 }
